@@ -133,6 +133,7 @@
                 </div>
                 <div class="row last-row">
                     <button class="btn btn-info btn-dble" value="0">0</button>
+                    <button class="btn btn-success btn-dble" value="=">=</button>
                     <!-- <button class="invisible" value=""></button> -->
                     <!-- <button class="btn btn-warning" value=".">.</button>
                       <button class="btn btn-warning" value="-">-</button> -->
@@ -144,7 +145,7 @@
 
         <div id="results" class="text-center">
             <br />
-            <button id="calculate-button" class="btn">Calculate</button>
+            <!-- <button id="calculate-button" class="btn">Calculate</button> -->
             <div id="feedback">
 
                 <p id="soapbox"></p>
@@ -259,17 +260,20 @@
                 curNumber = 0;
                 $('#result p').html(entry);
                 $('#previous p').html(eq);
+                resetCalculator()
             }
 
             else if (entry === "=") {
-                result = eval(eq);
-                $('#result p').html(result);
-                eq += "=" + result;
-                $('#previous p').html(eq);
-                eq = result;
-                entry = result;
-                curNumber = result;
-                reset = true;
+                handleCalculateButton()
+                
+                // result = eval(eq);
+                // $('#result p').html(result);
+                // eq += "=" + result;
+                // $('#previous p').html(eq);
+                // eq = result;
+                // entry = result;
+                // curNumber = result;
+                // reset = true;
             }
 
             else if (entry === "-" || entry === "*" || entry === "/") {
