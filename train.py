@@ -3,7 +3,7 @@ import numpy as np
 import sys
 from keras.models import Sequential
 from keras.layers import Dense, Activation
-from model_io import save_model, load_save_model
+from model_io import save_model, load_saved_model
 
 from sklearn.model_selection import train_test_split
 
@@ -17,12 +17,13 @@ def create_keras_model():
     
     # after the first layer, you don't need to specify
     # the size of the input anymore:
+    model.add(Dense(5))
     model.add(Dense(1))
     return model
 
-def train_model(model, x_train, y_train):
+def train_model(model, x_train, y_train, n_epochs=200):
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
-    model.fit(x_train, y_train, epochs=200, batch_size=10, verbose=1)
+    model.fit(x_train, y_train, epochs=n_epochs, batch_size=10, verbose=1)
    
 def evaluate(loaded_model, x_test, y_test):
     # evaluate loaded model on test data
@@ -48,7 +49,7 @@ def main():
     print(x_train.shape)
     print(y_train.shape)
     model = create_keras_model()
-    train_model(model, x_train, y_train)
+    train_model(model, x_train, y_train, 200)
     save_model(model)
     loaded_model = load_saved_model()
     evaluate(loaded_model, x_test, y_test)
