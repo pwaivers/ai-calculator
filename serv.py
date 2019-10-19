@@ -9,10 +9,6 @@ model = ''
 
 @app.route('/')
 def root():
-    global model
-    model = create_keras_model()
-    model.load_weights(get_weights_file())
-    model._make_predict_function()
     return app.send_static_file('index.html')
     
 @app.route('/test')
@@ -24,7 +20,9 @@ def test():
 def ai_add():
     global model
     if model == '':
-        return "No model"
+        model = create_keras_model()
+        model.load_weights(get_weights_file())
+        model._make_predict_function()
 
     left = request.args.get('left')
     right = request.args.get('right')
