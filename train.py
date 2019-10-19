@@ -1,25 +1,9 @@
 import tensorflow as tf
 import numpy as np
 import sys
-from keras.models import Sequential
-from keras.layers import Dense, Activation
-from model_io import save_model, load_saved_model
+from model_io import create_keras_model, save_model, load_saved_model
 
 from sklearn.model_selection import train_test_split
-
-
-def create_keras_model():
-    # as first layer in a sequential model:
-    model = Sequential()
-    model.add(Dense(5, input_shape=(2,)))
-    # now the model will take as input arrays of shape (*, 2)
-    # and output arrays of shape (*, 1)
-    
-    # after the first layer, you don't need to specify
-    # the size of the input anymore:
-    model.add(Dense(5))
-    model.add(Dense(1))
-    return model
 
 def train_model(model, x_train, y_train, n_epochs=200):
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
