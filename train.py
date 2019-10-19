@@ -1,12 +1,12 @@
 import tensorflow as tf
 import numpy as np
 import sys
-from keras.models import Sequential, model_from_json
+from keras.models import Sequential
 from keras.layers import Dense, Activation
+from model_io import save_model, load_save_model
 
 from sklearn.model_selection import train_test_split
 
-MODEL_NAME = 'model'
 
 def create_keras_model():
     # as first layer in a sequential model:
@@ -23,24 +23,7 @@ def create_keras_model():
 def train_model(model, x_train, y_train):
     model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
     model.fit(x_train, y_train, epochs=200, batch_size=10, verbose=1)
-
-def save_model(model):
-    model_json = model.to_json()
-    with open(MODEL_NAME + ".json", "w") as json_file:
-        json_file.write(model_json)
-    model.save_weights(MODEL_NAME + ".h5")
-
-def load_saved_model():
-    # load json and create model
-    json_file = open(MODEL_NAME + '.json', 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = model_from_json(loaded_model_json)
-    # load weights into new model
-    loaded_model.load_weights(MODEL_NAME + ".h5")
-    print("Loaded model from disk")
-    return loaded_model
-    
+   
 def evaluate(loaded_model, x_test, y_test):
     # evaluate loaded model on test data
     loaded_model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
