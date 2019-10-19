@@ -3,6 +3,10 @@ import numpy as np
 def get_answer(model, a, b):
     a = float(a)
     b = float(b)
+    print("First value:")
+    print(a)
+    print("Seconds value:")
+    print(b)
     inp = np.array([[a, b]], dtype = np.float64)
     output_raw = model.predict(inp)
     return output_raw[0][0]

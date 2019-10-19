@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import request
+from model_io import load_saved_model
+from simple_ai import get_answer
 import random
 
 app = Flask(__name__)
@@ -15,7 +17,8 @@ def test():
     
 @app.route('/ai-add')
 def ai_add():
-    left = int(request.args.get('left'))
-    right = int(request.args.get('right'))
-    return str(left + right + random.randint(1, 13))
+    model = load_saved_model()
+    left = request.args.get('left')
+    right = request.args.get('right')
+    return str(get_answer(model, left, right))
 

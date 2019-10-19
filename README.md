@@ -8,3 +8,7 @@ The first truly AI calculator
 - conda activate stupidai
 - python train.py
 
+# Setting up the flask server
+
+- export FLASK_APP=serv.py
+- flask run

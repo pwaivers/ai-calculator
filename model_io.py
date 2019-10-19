@@ -1,3 +1,4 @@
+import os
 from keras.models import model_from_json
 MODEL_NAME = 'model'
 
@@ -9,7 +10,8 @@ def save_model(model):
 
 def load_saved_model():
     # load json and create model
-    json_file = open(MODEL_NAME + '.json', 'r')
+    directory = os.path.dirname(os.path.realpath(__file__))
+    json_file = open(os.path.join(directory, MODEL_NAME + '.json'), 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
