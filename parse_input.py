@@ -5,8 +5,8 @@ def parse_input(op):
         return "plus"
     elif op == "-":
         return "minus"
-    elif op == "*"
+    elif op == "*":
         return "multiply"
-    elif op == "/"
+    elif op == "/":
         return "divide"
     raise NotImplementedError
