@@ -9,7 +9,7 @@ import os
 import numpy
 
 DB_URL = os.environ['DATABASE_URL']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+conn = psycopg2.connect(DB_URL, sslmode='require')
 
 
 app = Flask(__name__, static_url_path='')
@@ -31,7 +31,7 @@ def ai_add():
     global model
     if model == '':
         model = m_io.create_keras_model()
-        model.load_weights(m_io.get_weights_file())
+        model.load_weights(m_io.get_weights_file('plus'))
         model._make_predict_function()
 
     left = request.args.get('left')
