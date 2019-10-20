@@ -245,14 +245,14 @@
             }
 
             $.get( "ai-add", {left: a, right: b, operator: operator}, function( data ) {
-                displayResult(parseFloat(data), a, b)
+                displayResult(parseFloat(data), a, b, operator)
                 $( ".result" ).html( data );
             });
         }
 
-        function displayResult(answer, a, b) {
+        function displayResult(answer, a, b, op) {
             $("#calculate-button").text("AI Calculation Complete")
-            $("#soapbox").text("Your AI predicted solution for " + a + " + " + b + " is...")
+            $("#soapbox").text("Your AI predicted solution for " + a + " " + op +  " " + b + " is...")
             $("#answer").text(answer)
             $("#feedback").show()
         }
