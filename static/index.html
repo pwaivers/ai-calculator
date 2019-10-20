@@ -244,10 +244,7 @@
                 alert("Provided a valid input. I cannot handle complexity.")
             }
 
-            urls = {'+': "ai-add", '-': "ai-subtract", '*': "ai-multiply", '/': 'ai-divide'}
-
-            console.log(urls[operator], a, b)
-            $.get( urls[operator], {left: a, right: b}, function( data ) {
+            $.get( "ai-add", {left: a, right: b, operator: operator}, function( data ) {
                 displayResult(parseFloat(data), a, b)
                 $( ".result" ).html( data );
             });
