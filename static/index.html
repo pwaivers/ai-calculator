@@ -82,6 +82,11 @@
             width: 128px;
         }
 
+        .btn-zero {
+            margin-left: 70px;
+            margin-right: 62px;
+        }
+
         .btn-result {
             float: right;
             margin-left: 4px;
@@ -132,7 +137,7 @@
 
                 </div>
                 <div class="row last-row">
-                    <button class="btn btn-info btn-dble" value="0">0</button>
+                    <button class="btn btn-info btn-zero" value="0">0</button>
                     <button class="btn btn-success btn-dble" value="=">=</button>
                     <!-- <button class="invisible" value=""></button> -->
                     <!-- <button class="btn btn-warning" value=".">.</button>
@@ -152,9 +157,9 @@
                 <h1 id="answer"></h1>
 
                 <p>Was I close?
-                    <button id="was-i-close-help" type="button" class="btn btn-danger btn-xs">
+                    <a href="#">
                         <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>?
-                    </button>
+                    </a>
                 </p>
 
 
@@ -167,7 +172,7 @@
 
                 <br /><br />
 
-                <button id="tryagain" class="btn btn-warning">Try Again?</button>
+                <!-- <button id="tryagain" class="btn btn-warning">Try Again?</button> -->
             </div>
         </div>
 
@@ -226,12 +231,10 @@
                 alert("Provided a valid input. I cannot handle complexity.")
             }
 
-            answer = aiCompute(a, b)
-
-            // 3) Print the result
-            setTimeout(function () {
-                displayResult(answer, a, b)
-            }, 1000);
+            $.get( "ai-add", {left: a, right: b}, function( data ) {
+                displayResult(parseFloat(data), a, b)
+                $( ".result" ).html( data );
+            });
         }
 
         function displayResult(answer, a, b) {
