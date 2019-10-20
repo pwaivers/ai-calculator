@@ -9,7 +9,7 @@
 
     <style>
         @import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
-        @import url("http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+        @import url("https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
 
 
         body {
@@ -267,7 +267,7 @@
 
         function handleFeedback(feedback) {
             $(".feedback-btn").attr("disabled", true);
-                $('#feedback-thanks').text('Thanks!')
+            $('#feedback-thanks').text('Thanks!')
             $.get( "feedback", {left: a, right: b, operator: operator, answer: answer, feedback: feedback}, function( data ) {
                 $(".feedback-btn").attr("disabled", true);
                 $('#feedback-thanks').text('Thanks!')
