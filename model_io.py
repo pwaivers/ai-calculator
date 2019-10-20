@@ -15,31 +15,32 @@ def create_keras_model():
     # the size of the input anymore:
     model.add(Dense(5))
     model.add(Dense(1))
+    model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
     return model
-
-
-def save_model(model):
-    model_json = model.to_json()
-    with open(MODEL_NAME + ".json", "w") as json_file:
-        json_file.write(model_json)
-    model.save_weights(MODEL_NAME + ".h5")
 
 def get_directory():
     return os.path.dirname(os.path.realpath(__file__))
 
-def get_weights_file():
-    # load weights into new model
-    return os.path.join(get_directory(), MODEL_NAME + ".h5")
+def get_weights_file(method):
+    return os.path.join(get_directory(), MODEL_NAME + "_" + method + ".h5")
 
-def load_saved_model():
+def get_json_file(method):
+    return os.path.join(get_directory(), MODEL_NAME + "_" + method + '.json') 
+
+def save_model(model, method):
+    model_json = model.to_json()
+    with open(get_json_file(method), "w") as json_file:
+        json_file.write(model_json)
+    model.save_weights(get_weights_file(method))
+
+def load_saved_model(method):
     # load json and create model
-    directory = get_directory()
-    json_file = open(os.path.join(directory, MODEL_NAME + '.json'), 'r')
+    json_file = open(get_json_file(method), 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights(get_weights_file())
+    loaded_model.load_weights(get_weights_file(method))
     print("Loaded model from disk")
     return loaded_model
  
