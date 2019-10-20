@@ -171,7 +171,7 @@
                 <button type="button" class="btn btn-danger btn-lg feedback-btn">
                     <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> NO
                 </button>
-
+                <p id='feedback-thanks'></p>
                 <br /><br />
 
                 <!-- <button id="tryagain" class="btn btn-warning">Try Again?</button> -->
@@ -255,6 +255,8 @@
             $("#soapbox").text("Your AI predicted solution for " + a + " " + op +  " " + b + " is...")
             $("#answer").text(answer)
             $("#feedback").show()
+            $(".feedback-btn").attr("disabled", false);
+            $('#feedback-thanks').text('')
         }
 
         function resetCalculator() {
@@ -263,8 +265,13 @@
             $("#feedback").hide()
         }
 
-        function handleFeedback() {
-            alert("Thanks for the feedback!!")
+        function handleFeedback(feedback) {
+            $(".feedback-btn").attr("disabled", true);
+                $('#feedback-thanks').text('Thanks!')
+            $.get( "feedback", {left: a, right: b, operator: operator, answer: answer, feedback: feedback}, function( data ) {
+                $(".feedback-btn").attr("disabled", true);
+                $('#feedback-thanks').text('Thanks!')
+            });
         }
 
         function handleButtonPress(entry) {
@@ -339,7 +346,12 @@
                     } else {
                         curNumber += entry;
                     }
-                    eq += entry;
+                    if (eq == '0'){
+                        eq = entry;
+                    } else {
+                        eq += entry;
+                    }
+                    
                 }
                 $('#previous p').html(eq);
                 $('#result p').html(curNumber);
