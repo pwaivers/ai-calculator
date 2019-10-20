@@ -74,6 +74,11 @@
             margin: 2px;
         }
 
+        #calc button {
+            height: 50px;
+            font-size: large;
+        }
+
         .invisible {
             width: 0;
         }
@@ -103,6 +108,7 @@
     <div class="container">
         <div id="header">
             <h3>AI Calculator</h3>
+            <p>The first truly smart calculator, combining the power of AI machine learning and humans.</p>
         </div>
         <div id="calc" class="text-center">
             <div id="display">
@@ -156,11 +162,7 @@
                 <p id="soapbox"></p>
                 <h1 id="answer"></h1>
 
-                <p>Was I close?
-                    <a href="#">
-                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>?
-                    </a>
-                </p>
+                <p>Was I close?</p>
 
 
                 <button type="button" class="btn btn-success btn-lg feedback-btn">
@@ -225,13 +227,24 @@
             $("#calculate-button").text("Calculating...")
 
             // 2) Get the result
-            a = parseInt(eq.split("+")[0])
-            b = parseInt(eq.split("+")[1])
-            if (isNaN(a) || isNaN(b)){
+            operator = ''
+            if (eq.indexOf('+') > -1){
+                operator = '+'
+            } else if (eq.indexOf('-') > -1){
+                operator = '-'
+            } else if (eq.indexOf('*') > -1){
+                operator = '*'
+            } else if (eq.indexOf('/') > -1){
+                operator = '/'
+            }
+
+            a = parseInt(eq.split(operator)[0])
+            b = parseInt(eq.split(operator)[1])
+            if (operator === '' || isNaN(a) || isNaN(b)){
                 alert("Provided a valid input. I cannot handle complexity.")
             }
 
-            $.get( "ai-add", {left: a, right: b}, function( data ) {
+            $.get( "ai-add", {left: a, right: b, operator: operator}, function( data ) {
                 displayResult(parseFloat(data), a, b)
                 $( ".result" ).html( data );
             });
@@ -248,7 +261,6 @@
             $("#answer").text("")
             $("#calculate-button").text("Calculate")
             $("#feedback").hide()
-            handleButtonPress("ac")
         }
 
         function handleFeedback() {
@@ -279,9 +291,9 @@
                 // reset = true;
             }
 
-            else if (entry === "-" || entry === "*" || entry === "/") {
-                alert("AI Calculator does not support the following operator yet: " + entry)
-            }
+            // else if (entry === "-" || entry === "*" || entry === "/") {
+            //     alert("AI Calculator does not support the following operator yet: " + entry)
+            // }
 
             else if (isNaN(entry)) {   //check if is not a number, and after that, prevents for multiple "." to enter the same number
                 if (entry !== ".") {
@@ -303,7 +315,7 @@
                         eq = 0.;
                     }
                     else {
-                        if (curNumber === "0") {
+                        if (curNumber == 0) {
                             curNumber = entry;
                         } else {
                             curNumber += entry;
@@ -322,8 +334,12 @@
                     reset = false;
                 }
                 else {
+                    if (curNumber == '0') {
+                        curNumber = entry;
+                    } else {
+                        curNumber += entry;
+                    }
                     eq += entry;
-                    curNumber += entry;
                 }
                 $('#previous p').html(eq);
                 $('#result p').html(curNumber);
