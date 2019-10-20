@@ -13,5 +13,7 @@ The first truly AI calculator
 - export FLASK_APP=serv.py
 - flask run
 
+NOTE: After changing any enviromental variables, delete `__pycache__`
+
 # Creating virtual enviroment
 https://flask.palletsprojects.com/en/1.1.x/installation/#virtual-environments
