@@ -32,9 +32,9 @@ def ai_add():
     global model
     if model == '':
         model = m_io.create_keras_model()
-        method = parse_input(request.args.get('operator'))
-        model.load_weights(m_io.get_weights_file(method))
-        model._make_predict_function()
+    method = parse_input(request.args.get('operator'))
+    model.load_weights(m_io.get_weights_file(method))
+    model._make_predict_function()
 
     left = request.args.get('left')
     right = request.args.get('right')
