@@ -1,4 +1,5 @@
 from flask import Flask, send_from_directory, request
+from parse_input import parse_input
 import model_io as m_io
 from simple_ai import get_answer
 import random
@@ -31,7 +32,8 @@ def ai_add():
     global model
     if model == '':
         model = m_io.create_keras_model()
-        model.load_weights(m_io.get_weights_file('plus'))
+        method = parse_input(request.args.get('operator'))
+        model.load_weights(m_io.get_weights_file(method))
         model._make_predict_function()
 
     left = request.args.get('left')
@@ -54,7 +56,7 @@ def save_models():
         json = b''
         with open(m_io.get_json_file(m), "rb") as f:
             json = f.read()
-        cur.execute('SELECT * FROM modles WHERE name = %s', (m,))
+        cur.execute('SELECT * FROM models WHERE name = %s', (m,))
         r = cur.fetchone()
         
         if r is not None:
@@ -64,5 +66,3 @@ def save_models():
         
         cur.commit()
             
-            
-# to load -> get file paths for models -> over write if exists/create if not -> call load function
